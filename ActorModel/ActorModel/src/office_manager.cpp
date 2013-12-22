@@ -30,7 +30,11 @@ void office_manager::init()
                send(m_booker, q);
            },
            on_arg_match >> [=](check _check) {
-               send(m_master, task_for_master{this, _check.client, _check.square});
+               if (_check.purchased) {
+                   send(m_master, task_for_master{this, _check.client, _check.square});
+               } else {
+                   send_exit(_check.client, exit_reason::user_shutdown);
+               }
            },
            on(atom("installed"), arg_match) >> [=](task_for_master _task_for_master) {
                send(_task_for_master.client, atom("installed"));

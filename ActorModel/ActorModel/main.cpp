@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     auto _master = spawn<master, detached>(_installer);
     auto _booker = spawn<booker, detached>(6.f);
     auto _office_manager = spawn<office_manager, detached>(_master, _booker);
-    auto _client = spawn<client, detached>(120.f, 5.f, _office_manager);
+    auto _client = spawn<client, detached>(110.f, 5.f, _office_manager);
     
     _installer->link_to(_master);
     _master->link_to(_office_manager);
